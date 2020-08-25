@@ -3,7 +3,6 @@ from typing import Callable, List, Set, TYPE_CHECKING, TypeVar
 
 from arcor2 import DynamicParamTuple as DPT, rest
 from arcor2.data.common import ActionMetadata, Joint, Orientation, Pose, Position, ProjectRobotJoints, StrEnum
-from arcor2.data.object_type import MeshFocusAction
 from arcor2.parameter_plugins.relative_pose import RelativePose
 
 from dataclasses_jsonschema import JsonSchemaMixin
@@ -167,9 +166,6 @@ class KinaliRobot(KinaliAbstractRobot):
 
     def get_output(self, output_id: str) -> float:
         return rest.get_primitive(f"{self.settings.url}/outputs/{output_id}", float)
-
-    def focus(self, mfa: MeshFocusAction) -> Pose:
-        return rest.put(f"{self.settings.url}/utils/focus", mfa, data_cls=Pose)
 
     @lru_cache()
     def grippers(self) -> Set[str]:
